@@ -1,2 +1,2 @@
 # Analytics-and-optimization-exercise-in-Python
-ww
+This course equips students to be practitioners of prescriptive analytics, which is the science of decision making using rigorous mathematical tools of optimization. Students will develop optimization models in Python to analyze real-world problems in diverse application areas, including business strategy, inven- tory management, revenue management, resource allocation, matching, scheduling, and portfolio opti- mization.
