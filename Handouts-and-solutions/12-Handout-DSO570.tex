@@ -1,0 +1,683 @@
+
+
+
+
+    
+% !TeX spellcheck = de_DE
+% !TeX encoding = UTF-8
+\documentclass{scrreprt}
+
+    
+    
+    \usepackage[T1]{fontenc}
+    % Nicer default font (+ math font) than Computer Modern for most use cases
+    \usepackage{mathpazo}
+
+    % Basic figure setup, for now with no caption control since it's done
+    % automatically by Pandoc (which extracts ![](path) syntax from Markdown).
+    \usepackage{graphicx}
+    % We will generate all images so they have a width \maxwidth. This means
+    % that they will get their normal width if they fit onto the page, but
+    % are scaled down if they would overflow the margins.
+    \makeatletter
+    \def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth
+    \else\Gin@nat@width\fi}
+    \makeatother
+    \let\Oldincludegraphics\includegraphics
+    % Set max figure width to be 80% of text width, for now hardcoded.
+    \renewcommand{\includegraphics}[1]{\Oldincludegraphics[width=.8\maxwidth]{#1}}
+    % Ensure that by default, figures have no caption (until we provide a
+    % proper Figure object with a Caption API and a way to capture that
+    % in the conversion process - todo).
+    \usepackage{caption}
+    \DeclareCaptionLabelFormat{nolabel}{}
+    \captionsetup{labelformat=nolabel}
+
+    \usepackage{adjustbox} % Used to constrain images to a maximum size 
+    \usepackage{xcolor} % Allow colors to be defined
+    \usepackage{enumerate} % Needed for markdown enumerations to work
+    \usepackage{geometry} % Used to adjust the document margins
+    \usepackage{amsmath} % Equations
+    \usepackage{amssymb} % Equations
+    \usepackage{textcomp} % defines textquotesingle
+    % Hack from http://tex.stackexchange.com/a/47451/13684:
+    \AtBeginDocument{%
+        \def\PYZsq{\textquotesingle}% Upright quotes in Pygmentized code
+    }
+    \usepackage{upquote} % Upright quotes for verbatim code
+    \usepackage{eurosym} % defines \euro
+    \usepackage[mathletters]{ucs} % Extended unicode (utf-8) support
+    \usepackage[utf8x]{inputenc} % Allow utf-8 characters in the tex document
+    \usepackage{fancyvrb} % verbatim replacement that allows latex
+    \usepackage{grffile} % extends the file name processing of package graphics 
+                         % to support a larger range 
+    % The hyperref package gives us a pdf with properly built
+    % internal navigation ('pdf bookmarks' for the table of contents,
+    % internal cross-reference links, web links for URLs, etc.)
+    \usepackage{hyperref}
+    \usepackage{longtable} % longtable support required by pandoc >1.10
+    \usepackage{booktabs}  % table support for pandoc > 1.12.2
+    \usepackage[inline]{enumitem} % IRkernel/repr support (it uses the enumerate* environment)
+    \usepackage[normalem]{ulem} % ulem is needed to support strikethroughs (\sout)
+                                % normalem makes italics be italics, not underlines
+    
+
+    
+    
+    % Colors for the hyperref package
+    \definecolor{urlcolor}{rgb}{0,.145,.698}
+    \definecolor{linkcolor}{rgb}{.71,0.21,0.01}
+    \definecolor{citecolor}{rgb}{.12,.54,.11}
+
+    % ANSI colors
+    \definecolor{ansi-black}{HTML}{3E424D}
+    \definecolor{ansi-black-intense}{HTML}{282C36}
+    \definecolor{ansi-red}{HTML}{E75C58}
+    \definecolor{ansi-red-intense}{HTML}{B22B31}
+    \definecolor{ansi-green}{HTML}{00A250}
+    \definecolor{ansi-green-intense}{HTML}{007427}
+    \definecolor{ansi-yellow}{HTML}{DDB62B}
+    \definecolor{ansi-yellow-intense}{HTML}{B27D12}
+    \definecolor{ansi-blue}{HTML}{208FFB}
+    \definecolor{ansi-blue-intense}{HTML}{0065CA}
+    \definecolor{ansi-magenta}{HTML}{D160C4}
+    \definecolor{ansi-magenta-intense}{HTML}{A03196}
+    \definecolor{ansi-cyan}{HTML}{60C6C8}
+    \definecolor{ansi-cyan-intense}{HTML}{258F8F}
+    \definecolor{ansi-white}{HTML}{C5C1B4}
+    \definecolor{ansi-white-intense}{HTML}{A1A6B2}
+
+    % commands and environments needed by pandoc snippets
+    % extracted from the output of `pandoc -s`
+    \providecommand{\tightlist}{%
+      \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+    \DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+    % Add ',fontsize=\small' for more characters per line
+    \newenvironment{Shaded}{}{}
+    \newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{\textbf{{#1}}}}
+    \newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.56,0.13,0.00}{{#1}}}
+    \newcommand{\DecValTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{{#1}}}
+    \newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{{#1}}}
+    \newcommand{\FloatTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{{#1}}}
+    \newcommand{\CharTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\StringTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\CommentTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textit{{#1}}}}
+    \newcommand{\OtherTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{{#1}}}
+    \newcommand{\AlertTok}[1]{\textcolor[rgb]{1.00,0.00,0.00}{\textbf{{#1}}}}
+    \newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.02,0.16,0.49}{{#1}}}
+    \newcommand{\RegionMarkerTok}[1]{{#1}}
+    \newcommand{\ErrorTok}[1]{\textcolor[rgb]{1.00,0.00,0.00}{\textbf{{#1}}}}
+    \newcommand{\NormalTok}[1]{{#1}}
+    
+    % Additional commands for more recent versions of Pandoc
+    \newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.53,0.00,0.00}{{#1}}}
+    \newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.73,0.40,0.53}{{#1}}}
+    \newcommand{\ImportTok}[1]{{#1}}
+    \newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.73,0.13,0.13}{\textit{{#1}}}}
+    \newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    \newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    \newcommand{\VariableTok}[1]{\textcolor[rgb]{0.10,0.09,0.49}{{#1}}}
+    \newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{\textbf{{#1}}}}
+    \newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.40,0.40,0.40}{{#1}}}
+    \newcommand{\BuiltInTok}[1]{{#1}}
+    \newcommand{\ExtensionTok}[1]{{#1}}
+    \newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.74,0.48,0.00}{{#1}}}
+    \newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.49,0.56,0.16}{{#1}}}
+    \newcommand{\InformationTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    \newcommand{\WarningTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    
+    
+    % Define a nice break command that doesn't care if a line doesn't already
+    % exist.
+    \def\br{\hspace*{\fill} \\* }
+    % Math Jax compatability definitions
+    \def\gt{>}
+    \def\lt{<}
+    % Document parameters
+    \title{12-Handout-DSO570}
+    
+    
+    
+
+    % Pygments definitions
+    
+\makeatletter
+\def\PY@reset{\let\PY@it=\relax \let\PY@bf=\relax%
+    \let\PY@ul=\relax \let\PY@tc=\relax%
+    \let\PY@bc=\relax \let\PY@ff=\relax}
+\def\PY@tok#1{\csname PY@tok@#1\endcsname}
+\def\PY@toks#1+{\ifx\relax#1\empty\else%
+    \PY@tok{#1}\expandafter\PY@toks\fi}
+\def\PY@do#1{\PY@bc{\PY@tc{\PY@ul{%
+    \PY@it{\PY@bf{\PY@ff{#1}}}}}}}
+\def\PY#1#2{\PY@reset\PY@toks#1+\relax+\PY@do{#2}}
+
+\expandafter\def\csname PY@tok@w\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.73,0.73}{##1}}}
+\expandafter\def\csname PY@tok@c\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@cp\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.74,0.48,0.00}{##1}}}
+\expandafter\def\csname PY@tok@k\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kp\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kt\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.69,0.00,0.25}{##1}}}
+\expandafter\def\csname PY@tok@o\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@ow\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.67,0.13,1.00}{##1}}}
+\expandafter\def\csname PY@tok@nb\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@nf\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\expandafter\def\csname PY@tok@nc\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\expandafter\def\csname PY@tok@nn\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\expandafter\def\csname PY@tok@ne\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.82,0.25,0.23}{##1}}}
+\expandafter\def\csname PY@tok@nv\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@no\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.53,0.00,0.00}{##1}}}
+\expandafter\def\csname PY@tok@nl\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.63,0.63,0.00}{##1}}}
+\expandafter\def\csname PY@tok@ni\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.60,0.60,0.60}{##1}}}
+\expandafter\def\csname PY@tok@na\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.49,0.56,0.16}{##1}}}
+\expandafter\def\csname PY@tok@nt\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@nd\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.67,0.13,1.00}{##1}}}
+\expandafter\def\csname PY@tok@s\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sd\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@si\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.73,0.40,0.53}{##1}}}
+\expandafter\def\csname PY@tok@se\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.73,0.40,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sr\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.40,0.53}{##1}}}
+\expandafter\def\csname PY@tok@ss\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@sx\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@m\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@gh\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,0.50}{##1}}}
+\expandafter\def\csname PY@tok@gu\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.50,0.00,0.50}{##1}}}
+\expandafter\def\csname PY@tok@gd\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.63,0.00,0.00}{##1}}}
+\expandafter\def\csname PY@tok@gi\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.63,0.00}{##1}}}
+\expandafter\def\csname PY@tok@gr\endcsname{\def\PY@tc##1{\textcolor[rgb]{1.00,0.00,0.00}{##1}}}
+\expandafter\def\csname PY@tok@ge\endcsname{\let\PY@it=\textit}
+\expandafter\def\csname PY@tok@gs\endcsname{\let\PY@bf=\textbf}
+\expandafter\def\csname PY@tok@gp\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,0.50}{##1}}}
+\expandafter\def\csname PY@tok@go\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.53,0.53,0.53}{##1}}}
+\expandafter\def\csname PY@tok@gt\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.27,0.87}{##1}}}
+\expandafter\def\csname PY@tok@err\endcsname{\def\PY@bc##1{\setlength{\fboxsep}{0pt}\fcolorbox[rgb]{1.00,0.00,0.00}{1,1,1}{\strut ##1}}}
+\expandafter\def\csname PY@tok@kc\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kd\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kn\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kr\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@bp\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@fm\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\expandafter\def\csname PY@tok@vc\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@vg\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@vi\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@vm\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@sa\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sb\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sc\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@dl\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@s2\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sh\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@s1\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@mb\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@mf\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@mh\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@mi\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@il\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@mo\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@ch\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@cm\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@cpf\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@c1\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@cs\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+
+\def\PYZbs{\char`\\}
+\def\PYZus{\char`\_}
+\def\PYZob{\char`\{}
+\def\PYZcb{\char`\}}
+\def\PYZca{\char`\^}
+\def\PYZam{\char`\&}
+\def\PYZlt{\char`\<}
+\def\PYZgt{\char`\>}
+\def\PYZsh{\char`\#}
+\def\PYZpc{\char`\%}
+\def\PYZdl{\char`\$}
+\def\PYZhy{\char`\-}
+\def\PYZsq{\char`\'}
+\def\PYZdq{\char`\"}
+\def\PYZti{\char`\~}
+% for compatibility with earlier versions
+\def\PYZat{@}
+\def\PYZlb{[}
+\def\PYZrb{]}
+\makeatother
+
+
+    % Exact colors from NB
+    \definecolor{incolor}{rgb}{0.0, 0.0, 0.5}
+    \definecolor{outcolor}{rgb}{0.545, 0.0, 0.0}
+
+    % Don't number sections
+    \renewcommand{\thesection}{\hspace*{-0.5em}}
+    \renewcommand{\thesubsection}{\hspace*{-0.5em}}
+
+
+
+    
+    % Prevent overflowing lines due to hard-to-break entities
+    \sloppy 
+    % Setup hyperref package
+    \hypersetup{
+      breaklinks=true,  % so long urls are correctly broken across lines
+      colorlinks=true,
+      urlcolor=urlcolor,
+      linkcolor=linkcolor,
+      citecolor=citecolor,
+      }
+    % Slightly bigger margins than the latex defaults
+    
+    \geometry{verbose,tmargin=1in,bmargin=1in,lmargin=1in,rmargin=1in}
+    
+    
+
+    \begin{document}
+    
+    
+    
+    
+    
+
+    
+    \hypertarget{session-12-simulation-modeling-i}{%
+\section{Session 12: Simulation Modeling
+I}\label{session-12-simulation-modeling-i}}
+
+\hypertarget{generating-samples}{%
+\subsection{1. Generating Samples}\label{generating-samples}}
+
+	
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}[{\color{incolor}1}]:} \PY{k+kn}{from} \PY{n+nn}{scipy}\PY{n+nn}{.}\PY{n+nn}{stats} \PY{k}{import} \PY{n}{norm}
+     \PY{k+kn}{import} \PY{n+nn}{numpy} \PY{k}{as} \PY{n+nn}{np}
+     \PY{n}{np}\PY{o}{.}\PY{n}{random}\PY{o}{.}\PY{n}{seed}\PY{p}{(}\PY{l+m+mi}{0}\PY{p}{)}
+     \PY{n}{dist}\PY{o}{=}\PY{n}{norm}\PY{p}{(}\PY{l+m+mi}{100}\PY{p}{,}\PY{l+m+mi}{30}\PY{p}{)}
+     \PY{n}{dist}\PY{o}{.}\PY{n}{rvs}\PY{p}{(}\PY{p}{)}
+\end{Verbatim}
+	
+
+    
+    
+\begin{verbatim}
+152.92157037902993
+\end{verbatim}
+
+    
+
+	
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}[{\color{incolor}2}]:} \PY{n}{dist}\PY{o}{.}\PY{n}{rvs}\PY{p}{(}\PY{n}{size}\PY{o}{=}\PY{l+m+mi}{3}\PY{p}{)}
+\end{Verbatim}
+	
+
+    
+    
+\begin{verbatim}
+array([112.00471625, 129.36213952, 167.22679598])
+\end{verbatim}
+
+    
+
+	
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}[{\color{incolor}3}]:} \PY{k+kn}{import} \PY{n+nn}{pandas} \PY{k}{as} \PY{n+nn}{pd}
+     \PY{n}{data}\PY{o}{=}\PY{n}{dist}\PY{o}{.}\PY{n}{rvs}\PY{p}{(}\PY{n}{size}\PY{o}{=}\PY{l+m+mi}{10000}\PY{p}{)}
+     \PY{n}{demand}\PY{o}{=}\PY{n}{pd}\PY{o}{.}\PY{n}{Series}\PY{p}{(}\PY{n}{data}\PY{p}{)}
+     \PY{n}{demand}\PY{o}{.}\PY{n}{head}\PY{p}{(}\PY{p}{)}
+\end{Verbatim}
+	
+
+    
+    
+\begin{verbatim}
+0    156.026740
+1     70.681664
+2    128.502653
+3     95.459284
+4     96.903434
+dtype: float64
+\end{verbatim}
+
+    
+
+	
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}[{\color{incolor}4}]:} \PY{n}{demand}\PY{o}{.}\PY{n}{mean}\PY{p}{(}\PY{p}{)}
+\end{Verbatim}
+	
+
+    
+    
+\begin{verbatim}
+99.43350357671024
+\end{verbatim}
+
+    
+
+	
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}[{\color{incolor}5}]:} \PY{n}{np}\PY{o}{.}\PY{n}{mean}\PY{p}{(}\PY{n}{data}\PY{p}{)}
+\end{Verbatim}
+	
+
+    
+    
+\begin{verbatim}
+99.43350357671024
+\end{verbatim}
+
+    
+
+	
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}[{\color{incolor}6}]:} \PY{n}{demand}\PY{o}{.}\PY{n}{std}\PY{p}{(}\PY{p}{)}
+\end{Verbatim}
+	
+
+    
+    
+\begin{verbatim}
+29.619606530616284
+\end{verbatim}
+
+    
+
+	
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}[{\color{incolor}7}]:} \PY{n}{np}\PY{o}{.}\PY{n}{std}\PY{p}{(}\PY{n}{data}\PY{p}{)}
+\end{Verbatim}
+	
+
+    
+    
+\begin{verbatim}
+29.618125513263394
+\end{verbatim}
+
+    
+
+	
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}[{\color{incolor}8}]:} \PY{p}{(}\PY{n}{demand}\PY{o}{\PYZlt{}}\PY{l+m+mi}{100}\PY{p}{)}\PY{o}{.}\PY{n}{mean}\PY{p}{(}\PY{p}{)}
+\end{Verbatim}
+	
+
+    
+    
+\begin{verbatim}
+0.5109
+\end{verbatim}
+
+    
+
+	
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}[{\color{incolor}9}]:} \PY{n}{np}\PY{o}{.}\PY{n}{mean}\PY{p}{(}\PY{n}{data}\PY{o}{\PYZlt{}}\PY{l+m+mi}{100}\PY{p}{)}
+\end{Verbatim}
+	
+
+    
+    
+\begin{verbatim}
+0.5109
+\end{verbatim}
+
+    
+
+	
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}[{\color{incolor}33}]:} \PY{n}{demand}\PY{o}{.}\PY{n}{hist}\PY{p}{(}\PY{n}{bins}\PY{o}{=}\PY{l+m+mi}{20}\PY{p}{)}
+\end{Verbatim}
+	
+
+    
+
+    \begin{center}
+    \adjustimage{max size={0.4\linewidth}{0.9\paperheight}}{12-Handout-DSO570_files/12-Handout-DSO570_10_1.png}
+    \end{center}
+
+    
+	
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}[{\color{incolor}11}]:} \PY{n}{demand}\PY{o}{.}\PY{n}{hist}\PY{p}{(}\PY{n}{bins}\PY{o}{=}\PY{l+m+mi}{20}\PY{p}{,}\PY{n}{density}\PY{o}{=}\PY{k+kc}{True}\PY{p}{,}\PY{n}{cumulative}\PY{o}{=}\PY{k+kc}{True}\PY{p}{)}
+\end{Verbatim}
+	
+
+    
+    
+    
+
+    \begin{center}
+    \adjustimage{max size={0.4\linewidth}{0.9\paperheight}}{12-Handout-DSO570_files/12-Handout-DSO570_11_1.png}
+    \end{center}
+
+    
+	
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}[{\color{incolor}12}]:} \PY{n}{distA}\PY{o}{=}\PY{n}{norm}\PY{p}{(}\PY{l+m+mi}{200}\PY{p}{,}\PY{l+m+mi}{50}\PY{p}{)}
+      \PY{n}{distB}\PY{o}{=}\PY{n}{norm}\PY{p}{(}\PY{l+m+mi}{100}\PY{p}{,}\PY{l+m+mi}{30}\PY{p}{)}
+      \PY{k+kn}{from} \PY{n+nn}{scipy}\PY{n+nn}{.}\PY{n+nn}{stats} \PY{k}{import} \PY{n}{bernoulli}
+      \PY{n}{distSegment}\PY{o}{=}\PY{n}{bernoulli}\PY{p}{(}\PY{l+m+mf}{0.4}\PY{p}{)}
+      \PY{n}{data}\PY{o}{=}\PY{p}{[}\PY{p}{]}
+      \PY{k}{for} \PY{n}{i} \PY{o+ow}{in} \PY{n+nb}{range}\PY{p}{(}\PY{l+m+mi}{10000}\PY{p}{)}\PY{p}{:}
+          \PY{n}{segment}\PY{o}{=}\PY{n}{distSegment}\PY{o}{.}\PY{n}{rvs}\PY{p}{(}\PY{p}{)}
+          \PY{k}{if} \PY{n}{segment}\PY{o}{==}\PY{l+m+mi}{1}\PY{p}{:}
+              \PY{n}{value}\PY{o}{=}\PY{n}{distA}\PY{o}{.}\PY{n}{rvs}\PY{p}{(}\PY{p}{)}
+          \PY{k}{else}\PY{p}{:}
+              \PY{n}{value}\PY{o}{=}\PY{n}{distB}\PY{o}{.}\PY{n}{rvs}\PY{p}{(}\PY{p}{)}
+          \PY{n}{data}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{n}{value}\PY{p}{)}
+      \PY{n}{demand2}\PY{o}{=}\PY{n}{pd}\PY{o}{.}\PY{n}{Series}\PY{p}{(}\PY{n}{data}\PY{p}{)}
+      \PY{n}{demand2}\PY{o}{.}\PY{n}{hist}\PY{p}{(}\PY{n}{bins}\PY{o}{=}\PY{l+m+mi}{20}\PY{p}{)}
+\end{Verbatim}
+	
+
+        
+
+    \begin{center}
+    \adjustimage{max size={0.5\linewidth}{0.9\paperheight}}{12-Handout-DSO570_files/12-Handout-DSO570_12_1.png}
+    \end{center}
+
+    
+	
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}[{\color{incolor}13}]:} \PY{n}{values}\PY{o}{=}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{,}\PY{l+m+mf}{2.5}\PY{p}{,}\PY{l+m+mf}{3.5}\PY{p}{]}
+      \PY{n}{probs}\PY{o}{=}\PY{p}{[}\PY{l+m+mf}{0.3}\PY{p}{,}\PY{l+m+mf}{0.5}\PY{p}{,}\PY{l+m+mf}{0.2}\PY{p}{]}
+      \PY{n}{np}\PY{o}{.}\PY{n}{random}\PY{o}{.}\PY{n}{choice}\PY{p}{(}\PY{n}{values}\PY{p}{,}\PY{n}{p}\PY{o}{=}\PY{n}{probs}\PY{p}{)}
+\end{Verbatim}
+	
+
+    
+    
+\begin{verbatim}
+1.0
+\end{verbatim}
+
+    
+
+	
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}[{\color{incolor}14}]:} \PY{n}{np}\PY{o}{.}\PY{n}{random}\PY{o}{.}\PY{n}{choice}\PY{p}{(}\PY{n}{values}\PY{p}{,}\PY{n}{p}\PY{o}{=}\PY{n}{probs}\PY{p}{,}\PY{n}{size}\PY{o}{=}\PY{l+m+mi}{10}\PY{p}{)}
+\end{Verbatim}
+	
+
+    
+    
+\begin{verbatim}
+array([2.5, 3.5, 1. , 2.5, 1. , 2.5, 1. , 2.5, 1. , 1. ])
+\end{verbatim}
+
+    
+
+	
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}[{\color{incolor}15}]:} \PY{n}{samples}\PY{o}{=}\PY{n}{pd}\PY{o}{.}\PY{n}{Series}\PY{p}{(}\PY{n}{np}\PY{o}{.}\PY{n}{random}\PY{o}{.}\PY{n}{choice}\PY{p}{(}\PY{n}{values}\PY{p}{,}\PY{n}{p}\PY{o}{=}\PY{n}{probs}\PY{p}{,}\PY{n}{size}\PY{o}{=}\PY{l+m+mi}{10000}\PY{p}{)}\PY{p}{)}
+      \PY{n}{samples}\PY{o}{.}\PY{n}{hist}\PY{p}{(}\PY{p}{)}
+\end{Verbatim}
+	
+   
+
+    \begin{center}
+    \adjustimage{max size={0.4\linewidth}{0.9\paperheight}}{12-Handout-DSO570_files/12-Handout-DSO570_15_1.png}
+    \end{center}
+    
+	
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}[{\color{incolor}16}]:} \PY{n}{samples}\PY{o}{.}\PY{n}{hist}\PY{p}{(}\PY{n}{bins}\PY{o}{=}\PY{l+m+mi}{100}\PY{p}{,}\PY{n}{density}\PY{o}{=}\PY{k+kc}{True}\PY{p}{,}\PY{n}{cumulative}\PY{o}{=}\PY{k+kc}{True}\PY{p}{)}
+\end{Verbatim}
+	
+
+        
+   
+
+    \begin{center}
+    \adjustimage{max size={0.4\linewidth}{0.9\paperheight}}{12-Handout-DSO570_files/12-Handout-DSO570_16_1.png}
+    \end{center}
+    
+    
+    \textbf{Q1-a:} Generate 10000 samples of a uniform distribution between
+1 and 3 and plot the histogram, as well as the empirical CDF. Calculate
+the mean and standard deviation of the samples, as well as the
+proportion between 2 and 2.5 (inclusive).
+
+    \textbf{Q1-b:} Generate 100 samples of a binomial distrubution with
+\(n=10\) and \(p=0.3\). Calculate the mean and standard deviation of the
+sample and compare with what it should be from the formula. Plot a
+histogram with 50 bins. Repeat with 10,000 samples.
+
+    \textbf{Q2:} You are tasked with forecasting demand for a new product.
+Based on past data and your knowledge of the product, you estimate that
+the product quality will be Amazing with probability 0.1, Mediocre with
+probability 0.5, and Terrible with probability 0.4. You model the demand
+as normally distributed, with mean and standard deviation depending on
+the product quality as follows.
+
+\begin{longtable}[]{@{}llll@{}}
+\toprule
+Prod. Quality: & Amazing & Mediocre & Terrible\tabularnewline
+\midrule
+\endhead
+\(\mu\) & 10000 & 5000 & 1000\tabularnewline
+\(\sigma\) & 2000 & 1000 & 300\tabularnewline
+\bottomrule
+\end{longtable}
+
+Create a \texttt{Series} called ``forecast'' with 10,000 samples of the
+demand forecast, and compute the mean and standard deviation of the
+samples, as well as the probability that demand is more than 6000.
+Finally, plot a histogram of the samples with 100 bins, as well as the
+empirical CDF.
+
+	
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}[{\color{incolor}24}]:} 
+\end{Verbatim}
+\begin{Verbatim}[commandchars=\\\{\}]
+Sample mean: 3881.302260377957
+Sample standard deviation: 2939.8432697511016
+Probability demand more than 6000: 0.1781
+
+\end{Verbatim}
+
+	
+
+    
+    
+
+    \begin{center}
+    \adjustimage{max size={0.5\linewidth}{0.9\paperheight}}{12-Handout-DSO570_files/12-Handout-DSO570_20_2.png}
+    \end{center}
+   
+	
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}[{\color{incolor}25}]:} 
+\end{Verbatim}
+	
+
+    
+    
+
+    \begin{center}
+    \adjustimage{max size={0.5\linewidth}{0.9\paperheight}}{12-Handout-DSO570_files/12-Handout-DSO570_21_1.png}
+    \end{center}
+
+    
+    \textbf{Q3:} Nadeem is a car salesperson who faces the following
+incentive scheme at the dealership where he works. For each month, there
+is a ``target profit'' that the dealership sets for the month. If he
+makes more profit for the dealership that month than the target, then he
+receives a 20\% bonus on the amount of profit over the target. However,
+if he does not meet the target, he receives no bonus. For example, if
+the target is 80,000 and he makes 100,000 of profit, then he receives a
+4,000 bonus that month. However, if he makes 70,000, then he receives
+zero bonus that month. Nadeem would like to understand the distribution
+of his monthly bonus.
+
+Nadeem estimates that the number of cars he sells is binomial
+distributed with \(n=200\) and \(p=0.2\). On every car he sells, the
+amount of profit he makes for the dealership is normally distributed
+with \(\mu=3000\) and \(\sigma=1000\), and the profit from each car is
+independent of another.
+
+Create a \texttt{Series} called ``monthlyBonus'' with 10,000 samples of
+his monthly bonus. Compute the mean, the standard deviation, the
+probability the bonus is less than 5000, and plot a histogram with 50
+bins as well as the empirical CDF.
+
+	
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}[{\color{incolor}26}]:} 
+\end{Verbatim}
+\begin{Verbatim}[commandchars=\\\{\}]
+Mean is 7966.691715092367
+Standard deviation is 3595.714686711149
+Probability less than 5000 is 0.2058
+
+\end{Verbatim}
+
+	
+
+    
+   
+
+    \begin{center}
+    \adjustimage{max size={0.6\linewidth}{0.9\paperheight}}{12-Handout-DSO570_files/12-Handout-DSO570_23_2.png}
+    \end{center}
+    
+	
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}[{\color{incolor}27}]:} 
+\end{Verbatim}
+	
+
+    
+   
+
+    \begin{center}
+    \adjustimage{max size={0.5\linewidth}{0.9\paperheight}}{12-Handout-DSO570_files/12-Handout-DSO570_24_1.png}
+    \end{center}
+
+    
+    \textbf{(Bonus)} This question asks you to illustrate the Central Limit
+Theorem (CLT) by example. Consider the following distribution,
+\[X = \begin{cases} 3 & \text{ with probability $0.4$,} \\ 5 & \text{ with probability $0.1$,} \\ 9 & \text{ with probability $0.5$.} \end{cases}\]
+
+Define \(Y_n\) to be the sum of \(n\) independent random variables with
+the above distribution. Create 10000 samples of \(Y_1\), \(Y_5\),
+\(Y_{30}\), \(Y_{100}\), and \(Y_{1000}\) and plot their histograms
+(with 30 bins). You should be able to see the histograms converging to a
+Bell curve as \(n\) increases.
+
+The Central Limit Theorem (CLT) says that this phenomenon always
+happens, regardless of the distribution of \(X\). Moreover, it still
+takes place even if the \(n\) independent random variables do not have
+the same distribution, as long as each term in the sum is ``small''
+relative to the whole. (For a precise mathematical formulation of the
+CLT in the case with non-identical random variables, search for Lyapunov
+or Lindeberg CLT on Wikipedia.)
+
+
+    % Add a bibliography block to the postdoc
+    
+    
+    
+    \end{document}
